@@ -515,7 +515,7 @@
                 }
 
                 while (currentDate.isBefore(viewDate.clone().endOf('w'))) {
-                    row.append($('<th>').addClass('dow').text(currentDate.format('dd')));
+                    row.append($('<th>').addClass('dow').text(currentDate.format(options.dayNameFormat)));
                     currentDate.add(1, 'd');
                 }
                 widget.find('.datepicker-days thead').append(row);
@@ -1546,6 +1546,19 @@
             return picker;
         };
 
+        picker.dayNameFormat = function (newFormat) {
+            if (arguments.length === 0) {
+                return options.dayNameFormat;
+            }
+
+            if (typeof newFormat !== 'string') {
+                throw new TypeError('dayNameFormat() expects a string parameter');
+            }
+
+            options.dayNameFormat = newFormat;
+            return picker;
+        };
+
         picker.extraFormats = function (formats) {
             if (arguments.length === 0) {
                 return options.extraFormats;
@@ -2370,6 +2383,7 @@
         timeZone: 'Etc/UTC',
         format: false,
         dayViewHeaderFormat: 'MMMM YYYY',
+        dayNameFormat: 'dd' ,
         extraFormats: false,
         stepping: 1,
         minDate: false,
